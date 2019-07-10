@@ -14,7 +14,8 @@ NAME= fdf
 
 SRC=	./fdf.c \
 		./parsing.c \
-		./affichage.c
+		./gestion_mlx.c  \
+		./bresenham.c 
 
 OBJ= $(SRC:.c=.o)
 
