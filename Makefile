@@ -6,14 +6,15 @@
 #    By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/17 19:40:12 by mwragg            #+#    #+#              #
-#    Updated: 2019/07/09 21:48:53 by mwragg           ###   ########.fr        #
+#    Updated: 2019/07/10 02:20:33 by mwragg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME= fdf
 
 SRC=	./fdf.c \
-		./parsing.c
+		./parsing.c \
+		./affichage.c
 
 OBJ= $(SRC:.c=.o)
 
