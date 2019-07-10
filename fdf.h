@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:23:22 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 15:54:19 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/10 21:38:31 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void			initialisation_window(t_win *w);
 void			affichage(t_win *w);
 
 void			bresenham(t_win *w, t_point a, t_point b);
+void			get_coordinates(t_win *win, t_map *map);
 
 
 

@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:22:14 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 21:12:03 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/10 21:30:22 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		main(int ac, char **argv)
 		ft_strexit("Invalid number of arguments");
 	parsing(argv[1], &map);
 	initialisation_window(&win);
+	get_coordinates(&win, &map);
 /*	algorithm();*/
 	affichage(&win);
 	return(0);

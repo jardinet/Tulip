@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 15:06:49 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 15:54:25 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/10 21:38:41 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	get_coordinates(t_win *w, t_map *map)
 	cur_y = 0;
 	while (cur_y < map->y)
 	{
+		cur_x = 0;
 		while(cur_x < map->x)
 		{
 			if (cur_x != map->x)
