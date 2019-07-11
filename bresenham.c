@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 15:06:49 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 21:38:41 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/11 15:15:03 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void	fill_img_buffer(t_win *w, int x, int y)
 	int position;
 	char color = (char)255;
 
-	position = y * w->sizeline + (x * 4);
-	w->buff[position] = color;
-	w->buff[position + 1] = color;
-	w->buff[position + 2] = color;
+	if (0 <= x && x < WINX && 0 <= y && y < WINY)
+	{
+		position = y * w->sizeline + (x * 4);
+		w->buff[position] = color;
+		w->buff[position + 1] = color;
+		w->buff[position + 2] = color;
+	}
 }
 
 void	bresenham(t_win *w, t_point a, t_point b)
@@ -77,10 +80,10 @@ void	get_coordinates(t_win *w, t_map *map)
 
 	cur_x = 0;
 	cur_y = 0;
-	while (cur_y < map->y)
+	while (cur_y < map->y - 1)
 	{
 		cur_x = 0;
-		while(cur_x < map->x)
+		while(cur_x < map->x - 1)
 		{
 			if (cur_x != map->x)
 			{

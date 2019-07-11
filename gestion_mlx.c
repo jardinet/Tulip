@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 16:11:47 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 21:38:46 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/10 22:59:50 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ return (0);
 
 void	affichage(t_win *w) 
 {
-	mlx_put_image_to_window(w->id, w->win_ptr, w->tab, 0, 0);
+	mlx_put_image_to_window(w->id, w->win_ptr, w->mlx_img, 0, 0);
 	mlx_key_hook(w->win_ptr, key_events, w);
 	mlx_loop(w->id);
 }
