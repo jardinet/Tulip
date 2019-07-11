@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:23:22 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/11 15:15:47 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/11 21:25:42 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # define NOT_OK 1
 
 # define ISO_ANGLE 0.46373398
+
+# define TEST_ANGLE 0.08726646
+# define TEST_ANGLE 0.08726646
 # define OFFSET_X 200
 # define OFFSET_Y 200
 # define WINX 1000
@@ -72,7 +75,7 @@ int				valid_char(char *line);
 void			initialisation_window(t_win *w);
 void			affichage(t_win *w);
 
-void			bresenham(t_win *w, t_point a, t_point b);
+void			bresenham(t_win *w, t_point a, t_point b, int sign);
 void			get_coordinates(t_win *win, t_map *map);
 
 
