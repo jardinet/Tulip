@@ -6,7 +6,7 @@
 #    By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/17 19:40:12 by mwragg            #+#    #+#              #
-#    Updated: 2019/07/12 02:48:43 by mwragg           ###   ########.fr        #
+#    Updated: 2019/07/12 03:15:36 by mwragg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJ= $(SRC:.c=.o)
 
 INCLUDES= -I fdf.h
 
-FLAGS= -Wall -Wextra -Werror -fsanitize=address -g3
+FLAGS= -Wall -Wextra -Werror
 
 LIBMLXINC= -L ./minilibx -lmlx -framework OpenGL -framework AppKit
 LIBFTINC = -L ./libft -lft

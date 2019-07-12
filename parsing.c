@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 12:35:58 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/12 02:23:42 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/12 03:30:14 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ int		*chain_atoi(char *line, t_map *map)
 	while (tmp[i] && i < map->x)
 	{
 		clean[i] = ft_atoi(tmp[i]);
+		free(tmp[i]);
 		i++;
 	}
+	free(tmp);
 	return (clean);
 }
 
@@ -67,7 +69,11 @@ int		get_size_map(char *file)
 	if (((fd = open(file, O_RDONLY)) == -1))
 		ft_strexit("Error : Unable to open file");
 	while (get_next_line(fd, &file) > 0)
+	{
+		free(file);
 		y++;
+	}
+	free(file);
 	close(fd);
 	return (y);
 }
@@ -88,6 +94,8 @@ void	parsing(char *file, t_map *map)
 	while (get_next_line(fd, &line) > 0)
 	{
 		map->tab[i] = chain_atoi(line, map);
+		free(line);
 		i++;
 	}
+	free(line);
 }
