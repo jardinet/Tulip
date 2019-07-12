@@ -6,7 +6,7 @@
 #    By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/17 19:40:12 by mwragg            #+#    #+#              #
-#    Updated: 2019/07/10 02:20:33 by mwragg           ###   ########.fr        #
+#    Updated: 2019/07/12 02:48:43 by mwragg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME= fdf
 
 SRC=	./fdf.c \
 		./parsing.c \
-		./gestion_mlx.c  \
-		./bresenham.c 
+		./management_mlx.c  \
+		./bresenham.c \
+		./bonus.c
 
 OBJ= $(SRC:.c=.o)
 

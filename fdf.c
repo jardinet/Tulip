@@ -6,13 +6,13 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 19:22:14 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/10 21:30:22 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/12 02:15:57 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int		main(int ac, char **argv)
+int	main(int ac, char **argv)
 {
 	t_map	map;
 	t_win	win;
@@ -22,7 +22,6 @@ int		main(int ac, char **argv)
 	parsing(argv[1], &map);
 	initialisation_window(&win);
 	get_coordinates(&win, &map);
-/*	algorithm();*/
 	affichage(&win);
-	return(0);
+	return (0);
 }

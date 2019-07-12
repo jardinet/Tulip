@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 12:35:58 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/09 23:51:49 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/12 02:23:42 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 int		valid_char(char *line)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (line && line[i])
 	{
 		if (line[i] == SPACE || (ft_isdigit(line[i]))
-			|| (line[i] == '+' && (line[i + 1] && (ft_isdigit(line[i + 1]))))
-			|| (line[i] == '-' && (line[i + 1] && (ft_isdigit(line[i + 1])))))
+				|| (line[i] == '+' && (line[i + 1]
+						&& (ft_isdigit(line[i + 1]))))
+				|| (line[i] == '-' && (line[i + 1]
+						&& (ft_isdigit(line[i + 1])))))
 			i++;
-		else 
-			return(NOT_OK);
+		else
+			return (NOT_OK);
 	}
 	return (OK);
 }
-
 
 int		*chain_atoi(char *line, t_map *map)
 {
@@ -48,7 +49,7 @@ int		*chain_atoi(char *line, t_map *map)
 	tmp = ft_strsplit(line, SPACE);
 	clean = (int *)malloc(sizeof(int) * map->x);
 	if (clean == NULL || tmp == NULL)
-		ft_strexit("Error : Malloc(3) couldn't allocate sufficient memory."); 
+		ft_strexit("Error : Malloc(3) couldn't allocate sufficient memory.");
 	while (tmp[i] && i < map->x)
 	{
 		clean[i] = ft_atoi(tmp[i]);
@@ -57,10 +58,10 @@ int		*chain_atoi(char *line, t_map *map)
 	return (clean);
 }
 
-int		get_size_map(char *file) 
+int		get_size_map(char *file)
 {
-	int fd;
-	int y;
+	int	fd;
+	int	y;
 
 	y = 0;
 	if (((fd = open(file, O_RDONLY)) == -1))
@@ -83,8 +84,8 @@ void	parsing(char *file, t_map *map)
 	if ((fd = open(file, O_RDONLY)) == -1)
 		ft_strexit("Error : Unable to open file.");
 	if ((map->tab = (int**)malloc(sizeof(int *) * map->y)) == NULL)
-		ft_strexit("Error : Malloc(3) was unable to allocate sufficient memory.");
-	while (get_next_line(fd , &line) > 0)
+		ft_strexit("Error : Malloc(3) was unable to allocate memory.");
+	while (get_next_line(fd, &line) > 0)
 	{
 		map->tab[i] = chain_atoi(line, map);
 		i++;

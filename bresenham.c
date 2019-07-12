@@ -6,182 +6,127 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/10 15:06:49 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/11 21:42:10 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/12 02:44:29 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-/*
-  Projection takes 3d coordinates (x, y, z) and gives us 2d ones (x, y)
-
-  t_point	projection(int x, int y, int z)
-  {
-  t_point point;
-
-  point.x = OFFSET_X + ((x + y) * cos(ISO_ANGLE)) * DISTANCE;
-  point.y = OFFSET_Y + ((x - y) * sin(ISO_ANGLE) - z) * DISTANCE;
-  return (point);
-  }
-
-
-  Iterate the map to get the two points between which we bresenham
-*/
-
-void	fill_img_buffer(t_win *w, int x, int y)
+t_point	projection(int x, int y, int z)
 {
-	int position;
-	char color = (char)255;
+	t_point point;
 
-	if (0 <= x && x < WINX && 0 <= y && y < WINY)
-	{
-		position = y * w->sizeline + (x * 4);
-		w->buff[position] = color;
-		w->buff[position + 1] = color;
-		w->buff[position + 2] = color;
-	}
+	point.x = OFFSET_X + ((x + y) * cos(ISO_ANGLE)) * DISTANCE;
+	point.y = OFFSET_Y + ((x - y) * sin(ISO_ANGLE) - z) * DISTANCE;
+	return (point);
 }
 
-void	bresenham(t_win *w, t_point a, t_point b, int sign)
+void	bresenham(t_win *w, t_point a, t_point b)
 {
-	int		di;
-	int		dx;
-	int		dy;
+	int	di;
+	int	dx;
+	int	dy;
+	int	yi;
 
 	dx = b.x - a.x;
 	dy = b.y - a.y;
-	di = 2 * dy - dx;
-
-	while (a.x <= b.x && (sign == 1 ? a.y <= b.y : b.y <= a.y))
+	yi = 1;
+	if (dy < 0)
 	{
-		if (di >= 0)
+		dy = -dy;
+		yi = -1;
+	}
+	di = 2 * dy - dx;
+	while (a.x != b.x || a.y != b.y)
+	{
+		if (di > 0)
 		{
-			di = di + 2 * dy - 2 * dx;
-			a.x = a.x + 1;
-			a.y = a.y + sign;
+			di -= 2 * dx;
+			a.y += yi;
 		}
-		else
-		{
-			di = di + 2 * dy;
-			a.x = a.x + 1;
-			a.y = a.y;
-		}
-		fill_img_buffer(w, a.x, a.y);
+		di += 2 * dy;
+		a.x += 1;
+		fill_img_buffer(w, a.x, a.y, 0xFFFFFF);
 	}
 }
 
-
-void	rotation(t_point *p)
+void	bresenham_second_case(t_win *w, t_point a, t_point b)
 {
-	p->x = p->x * cos(TEST_ANGLE) - p->y * sin(TEST_ANGLE);
-	p->y = p->x * sin(TEST_ANGLE) + p->y * cos(TEST_ANGLE);
-}
+	int	di;
+	int	dx;
+	int	dy;
+	int	xi;
 
-void	swap_points(t_point *a, t_point *b)
-{
-	t_point tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-void	axe_swap(t_point *a)
-{
-	int tmp;
-	
-	tmp = a->x;
-	a->x = a->y;
-	a->y = tmp;
+	dx = b.x - a.x;
+	dy = b.y - a.y;
+	xi = 1;
+	if (dx < 0)
+	{
+		dx = -dx;
+		xi = -1;
+	}
+	di = 2 * dx - dy;
+	while (a.x != b.x || a.y != b.y)
+	{
+		if (di > 0)
+		{
+			di -= 2 * dy;
+			a.x += xi;
+		}
+		di += 2 * dx;
+		a.y += 1;
+		fill_img_buffer(w, a.x, a.y, 0xFFFFFF);
+	}
 }
 
 void	octant_management(t_win *w, t_point a, t_point b)
 {
-	int	sign;
 	int	dx;
 	int	dy;
-	int	di;
 
-	sign = 1;
 	dx = b.x - a.x;
 	dy = b.y - a.y;
-	di = 2 * dy - dx;
-
 	if (abs(dy) > abs(dx))
 	{
-		axe_swap(&a);
-		axe_swap(&b);
+		if (dy < 0)
+			bresenham_second_case(w, b, a);
+		else
+			bresenham_second_case(w, a, b);
 	}
-
-/* 	sign = 1; */
-/* 	dx = b.x - a.x; */
-/* 	dy = b.y - a.y; */
-/* 	di = 2 * dy - dx; */
-
-/* 	if (dx < 0) */
-/* 		swap_points(&a, &b); */
-
-/* 	sign = 1; */
-/* 	dx = b.x - a.x; */
-/* 	dy = b.y - a.y; */
-/* 	di = 2 * dy - dx; */
-/* 	if ( dy > 0) */
-/* 		sign = -1; */
-	bresenham(w, a, b, sign);
+	else
+	{
+		if (dx < 0)
+			bresenham(w, b, a);
+		else
+			bresenham(w, a, b);
+	}
 }
 
 void	get_coordinates(t_win *w, t_map *map)
 {
-	(void)map;
-	t_point	a;
-	t_point	b;
-	t_point	brotatif;
-	int		rotations;
-
-	a.x = 500;
-	a.y = 500;
-	b.x = 750;
-	b.y = 500;
-	rotations = 0;
-	while (rotations < 72)
-	{
-		rotation(&b);
-		brotatif = b;
-		brotatif.x += a.x;
-		brotatif.y += a.y;
-		octant_management(w, a, brotatif);
-		rotations++;
-	}
-/*	int		cur_x;
+	int		cur_x;
 	int		cur_y;
 	t_point	pt_a;
 	t_point	pt_b;
 
-	cur_x = 0;
-	cur_y = 0;
-	while (cur_y < map->y - 1)
+	cur_y = -1;
+	while (++cur_y < map->y)
 	{
-	cur_x = 0;
-	while(cur_x < map->x - 1)
-	{
-	if (cur_x != map->x)
-	{
-	pt_a = projection(cur_x, cur_y, map->tab[cur_y][cur_x]);
-	pt_b = projection(cur_x + 1 , cur_y, map->tab[cur_y][cur_x]);
-	bresenham(w, pt_a, pt_b);
-	// bresenham(cur_x, cur_y, cur_x + 1, cur_y); // droite
+		cur_x = -1;
+		while (++cur_x < map->x)
+		{
+			if (cur_x != map->x - 1)
+			{
+				pt_a = projection(cur_x, cur_y, map->tab[cur_y][cur_x]);
+				pt_b = projection(cur_x + 1, cur_y, map->tab[cur_y][cur_x + 1]);
+				octant_management(w, pt_a, pt_b);
+			}
+			if (cur_y != map->y - 1)
+			{
+				pt_a = projection(cur_x, cur_y, map->tab[cur_y][cur_x]);
+				pt_b = projection(cur_x, cur_y + 1, map->tab[cur_y + 1][cur_x]);
+				octant_management(w, pt_a, pt_b);
+			}
+		}
 	}
-	if (cur_y != map->y)
-	{
-	pt_a = projection(cur_x, cur_y, map->tab[cur_y][cur_x]);
-	pt_b = projection(cur_x, cur_y + 1, map->tab[cur_y][cur_x]);
-	bresenham(w, pt_a, pt_b);
-	// bresenham(cur_x, cur_y, cur_x, cur_y  + 1); // bas
-	}
-	cur_x++;
-	}
-	cur_y++;
-	}*/
 }
-
-
