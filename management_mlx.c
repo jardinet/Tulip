@@ -6,7 +6,7 @@
 /*   By: mwragg <mwragg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/12 02:24:42 by mwragg            #+#    #+#             */
-/*   Updated: 2019/07/12 03:03:00 by mwragg           ###   ########.fr       */
+/*   Updated: 2019/07/12 03:12:39 by mwragg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	affichage(t_win *w)
 
 void	initialisation_window(t_win *w)
 {
-	w->id = mlx_init();
+	if ((w->id = mlx_init()) == NULL)
+		ft_strexit(" Error : MLX failed to connect to initialise connection.");
 	if ((w->win_ptr = mlx_new_window(w->id, WINX, WINY, "FDF")) == NULL)
 		ft_strexit("Error : MLX failed to initialise window.");
 	if ((w->mlx_img = mlx_new_image(w->id, WINX, WINY)) == NULL)
